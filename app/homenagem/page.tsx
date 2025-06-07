@@ -37,9 +37,9 @@ export default function HomenagePage() {
   }, [playAudio]);
 
   const sections = [
-    { id: "photos", title: "GALERIA HOLOGRÁFICA", icon: "📸" },
+    { id: "photos", title: "GALERIA", icon: "📸" },
     { id: "message", title: "MENSAGEM CRIPTOGRAFADA", icon: "💌" },
-    { id: "ai", title: "ASSISTENTE ROMÂNTICO", icon: "🤖" },
+    { id: "ai", title: "ASSISTENTE AMORTIM", icon: "🤖" },
     { id: "stats", title: "ANÁLISE DE DADOS", icon: "📊" },
   ];
 

@@ -12,6 +12,23 @@ export function TechPhotoCarousel() {
 
   const images = [
     "/amor1.png",
+    "/amor2.png",
+    "/amor4.png",
+    "/amor5.png",
+    "/amor6.png",
+    "/amor7.png",
+    "/amor8.png",
+    "/amor9.png",
+    "/amor10.png",
+    "/amor11.png",    
+    "/amor12.png",
+    "/amor13.png",
+    "/amor14.png",
+    "/amor15.png",
+    "/amor16.png",
+    "/amor17.png",
+
+
   ]
 
   useEffect(() => {
