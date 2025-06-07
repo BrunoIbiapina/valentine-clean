@@ -22,12 +22,12 @@ export default function HomenagePage() {
 
   useEffect(() => {
     if (!audioRef.current) {
-      audioRef.current = new Audio("/json.mp3"); // Certifique-se que está na pasta public
+      audioRef.current = new Audio("/json.mp3");
       audioRef.current.loop = true;
     }
 
     if (playAudio) {
-      audioRef.current.currentTime = 0; // Reinicia do começo
+      audioRef.current.currentTime = 0;
       audioRef.current
         .play()
         .catch((err) => console.log("Autoplay bloqueado:", err));
@@ -66,11 +66,7 @@ export default function HomenagePage() {
             onClick={() => setPlayAudio(!playAudio)}
             className="text-cyan-400 hover:bg-cyan-500/20"
           >
-            {playAudio ? (
-              <Volume2 className="h-5 w-5" />
-            ) : (
-              <VolumeX className="h-5 w-5" />
-            )}
+            {playAudio ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
           </Button>
         </div>
       </div>
@@ -78,12 +74,12 @@ export default function HomenagePage() {
       {/* Navegação */}
       <div className="relative z-20 bg-gray-900/50 backdrop-blur border-b border-cyan-500/20">
         <div className="container mx-auto px-4">
-          <div className="flex space-x-1">
+          <div className="flex space-x-1 overflow-x-auto scrollbar-hide">
             {sections.map((section, index) => (
               <button
                 key={section.id}
                 onClick={() => setCurrentSection(index)}
-                className={`px-4 py-2 text-sm font-mono transition-all ${
+                className={`px-4 py-2 text-sm font-mono whitespace-nowrap transition-all ${
                   currentSection === index
                     ? "bg-cyan-500/20 text-cyan-400 border-b-2 border-cyan-400"
                     : "text-gray-400 hover:text-cyan-400"
@@ -97,7 +93,7 @@ export default function HomenagePage() {
       </div>
 
       {/* Conteúdo */}
-      <div className="relative z-10 container mx-auto px-4 py-8">
+      <div className="relative z-10 container mx-auto px-4 py-8 max-w-full overflow-x-hidden">
         {showContent && (
           <>
             {currentSection === 0 && (
