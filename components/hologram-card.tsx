@@ -14,11 +14,11 @@ export function HologramCard({ title, children }: HologramCardProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ scale: 1.02 }}
-      className="relative group"
+      className="relative group w-full"
     >
       <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-lg blur-xl group-hover:blur-2xl transition-all duration-300"></div>
 
-      <div className="relative bg-black/80 backdrop-blur border border-cyan-500/30 rounded-lg p-6 hover:border-cyan-400/50 transition-all duration-300">
+      <div className="relative w-full max-w-full bg-black/80 backdrop-blur border border-cyan-500/30 rounded-lg p-6 hover:border-cyan-400/50 transition-all duration-300">
         {/* Hologram effect lines */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/5 to-transparent animate-pulse"></div>
