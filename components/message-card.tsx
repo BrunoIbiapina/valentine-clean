@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { PenLine, Check } from "lucide-react"
-import { motion } from "framer-motion"
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { PenLine, Check } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function MessageCard() {
-  const [isEditing, setIsEditing] = useState(false)
+  const [isEditing, setIsEditing] = useState(false);
   const [message, setMessage] = useState(
     `Meu amor,
 
@@ -16,8 +16,8 @@ Desde o primeiro dia em que te conheci, minha vida se encheu de cores e alegria.
 
 Você é a pessoa mais incrível que já conheci, e sou grato todos os dias por ter você em minha vida.
 
-Neste Dia dos Namorados, quero te dizer mais uma vez o quanto você é importante para mim e quanto te amo.`,
-  )
+Neste Dia dos Namorados, quero te dizer mais uma vez o quanto você é importante para mim e quanto te amo.`
+  );
 
   return (
     <motion.div
@@ -45,7 +45,9 @@ Neste Dia dos Namorados, quero te dizer mais uma vez o quanto você é important
             </>
           ) : (
             <>
-              <div className="whitespace-pre-wrap font-handwriting text-lg">{message}</div>
+              <div className="whitespace-pre-wrap font-handwriting text-lg">
+                {message}
+              </div>
               <Button
                 variant="ghost"
                 size="sm"
@@ -60,5 +62,5 @@ Neste Dia dos Namorados, quero te dizer mais uma vez o quanto você é important
         </CardContent>
       </Card>
     </motion.div>
-  )
+  );
 }

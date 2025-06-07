@@ -15,12 +15,16 @@ export function TerminalMessage() {
 > Descriptografando sentimentos...
 
 MENSAGEM DECODIFICADA:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Feliz Dia dos Namorados!
+Que tal receber uma menssagem especial de forma diferente? kkkk 
+> Processando mensagem...
+> Mensagem processada com sucesso!
+> Exibindo mensagem...
 Hoje é só mais um motivo pra te lembrar o quanto você é importante pra mim.
-Estar com você é fácil, leve e me faz bem. Gosto da nossa conexão, das risadas, das conversas e da tranquilidade que a gente tem juntos.
-Obrigado por ser parceria, por somar e por estar sempre presente.
+Estar com você é leve e me faz bem. Gosto da nossa conexão, das risadas, das conversas e da tranquilidade que a gente tem juntos.
+Obrigado por ser parceria e por estar sempre presente.
 Te amo!`
 
   const [message, setMessage] = useState(originalMessage)

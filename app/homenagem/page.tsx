@@ -9,6 +9,7 @@ import { AIChat } from "@/components/ai-chat";
 import { Button } from "@/components/ui/button";
 import { Volume2, VolumeX, Cpu } from "lucide-react";
 
+
 export default function HomenagePage() {
   const [showContent, setShowContent] = useState(false);
   const [currentSection, setCurrentSection] = useState(0);
