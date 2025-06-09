@@ -8,7 +8,7 @@ import { HologramCard } from "@/components/hologram-card";
 import { AIChat } from "@/components/ai-chat";
 import { Button } from "@/components/ui/button";
 import { Volume2, VolumeX, Cpu } from "lucide-react";
-
+import { IntroCard } from "@/components/ui/IntroCard";
 
 export default function HomenagePage() {
   const [showContent, setShowContent] = useState(false);
@@ -67,7 +67,11 @@ export default function HomenagePage() {
             onClick={() => setPlayAudio(!playAudio)}
             className="text-cyan-400 hover:bg-cyan-500/20"
           >
-            {playAudio ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
+            {playAudio ? (
+              <Volume2 className="h-5 w-5" />
+            ) : (
+              <VolumeX className="h-5 w-5" />
+            )}
           </Button>
         </div>
       </div>
@@ -176,6 +180,9 @@ export default function HomenagePage() {
           </>
         )}
       </div>
+
+      {/* Card de Instrução flutuante */}
+      <IntroCard />
 
       {/* Rodapé */}
       <div className="relative z-20 border-t border-cyan-500/30 bg-black/80 backdrop-blur mt-16">
