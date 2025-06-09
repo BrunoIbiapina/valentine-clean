@@ -128,7 +128,7 @@ export function TechPhotoCarousel() {
 
           {/* Legenda com efeito karaokê */}
           <div className="absolute bottom-8 w-full text-center">
-            <p className="text-yellow-300 font-mono text-2xl sm:text-3xl md:text-4xl px-6 drop-shadow-lg leading-snug">
+            <p className="text-yellow-300 font-mono text-lg sm:text-3xl md:text-4xl px-6 drop-shadow-lg leading-snug">
               <span className="text-green-400">
                 {captions[currentCaptionIndex]?.slice(0, captionProgress)}
               </span>
