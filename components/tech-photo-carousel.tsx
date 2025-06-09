@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Maximize2, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -27,52 +27,62 @@ const captions = [
 ];
 
 export function TechPhotoCarousel() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [currentCaptionIndex, setCurrentCaptionIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [captionIndex, setCaptionIndex] = useState(0);
   const [captionProgress, setCaptionProgress] = useState(0);
+  const [isCaptionDone, setIsCaptionDone] = useState(false);
   const [isScanning, setIsScanning] = useState(true);
 
-  // Troca automática de imagem
+  // Roda o carrossel de imagens
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+      setCurrentIndex((prev) => (prev + 1) % images.length);
     }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Troca automática de legenda (independente da imagem)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentCaptionIndex((prev) => (prev + 1) % captions.length);
-      setCaptionProgress(0);
-    }, 7000); // legenda troca a cada 7s
     return () => clearInterval(interval);
   }, []);
 
   // Efeito de digitação da legenda
   useEffect(() => {
-    const caption = captions[currentCaptionIndex];
-    if (!caption) return;
+    if (captionIndex >= captions.length) {
+      setIsCaptionDone(true);
+      return;
+    }
 
+    setCaptionProgress(0);
+    setIsCaptionDone(false);
+
+    const caption = captions[captionIndex];
     const interval = setInterval(() => {
       setCaptionProgress((prev) => {
-        if (prev < caption.length) return prev + 1;
-        clearInterval(interval);
-        return caption.length;
+        if (prev < caption.length) {
+          return prev + 1;
+        } else {
+          clearInterval(interval);
+          setTimeout(() => {
+            if (captionIndex < captions.length - 1) {
+              setCaptionIndex((prev) => prev + 1);
+            } else {
+              setIsCaptionDone(true);
+            }
+          }, 1500);
+          return caption.length;
+        }
       });
-    }, 40);
+    }, 60);
 
     return () => clearInterval(interval);
-  }, [currentCaptionIndex]);
+  }, [captionIndex]);
 
-  const goTo = (index: number) => {
-    setCurrentImageIndex(index);
+  const restartCaptions = () => {
+    setCaptionIndex(0);
+    setCaptionProgress(0);
+    setIsCaptionDone(false);
   };
 
   return (
     <div className="relative">
       <div className="bg-gradient-to-br from-gray-900 to-black border border-cyan-500/30 rounded-lg p-4 shadow-2xl shadow-cyan-500/20">
-        {/* Header */}
+        {/* HEADER */}
         <div className="flex justify-between items-center mb-4 pb-2 border-b border-cyan-500/20">
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 rounded-full bg-red-500"></div>
@@ -85,11 +95,11 @@ export function TechPhotoCarousel() {
           </Button>
         </div>
 
-        {/* Imagem */}
+        {/* FOTO */}
         <div className="relative aspect-square rounded-lg overflow-hidden bg-black border border-cyan-500/20">
           <AnimatePresence mode="wait">
             <motion.div
-              key={currentImageIndex}
+              key={currentIndex}
               initial={{ opacity: 0, scale: 1.1 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
@@ -97,12 +107,11 @@ export function TechPhotoCarousel() {
               className="w-full h-full relative"
             >
               <Image
-                src={images[currentImageIndex] || "/placeholder.svg"}
-                alt={`Foto ${currentImageIndex + 1}`}
+                src={images[currentIndex]}
+                alt={`Foto ${currentIndex + 1}`}
                 fill
                 className="object-cover"
               />
-
               {isScanning && (
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent"
@@ -110,11 +119,10 @@ export function TechPhotoCarousel() {
                   transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                 />
               )}
-
               {/* HUD */}
               <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-2 left-2 text-cyan-400 font-mono text-xs bg-black/50 px-2 py-1 rounded">
-                  IMG_{String(currentImageIndex + 1).padStart(3, "0")}.jpg
+                  IMG_{String(currentIndex + 1).padStart(3, "0")}.jpg
                 </div>
                 <div className="absolute top-2 right-2 text-green-400 font-mono text-xs bg-black/50 px-2 py-1 rounded">
                   ● REC
@@ -126,26 +134,14 @@ export function TechPhotoCarousel() {
             </motion.div>
           </AnimatePresence>
 
-          {/* Legenda com efeito karaokê */}
-          <div className="absolute bottom-8 w-full text-center">
-            <p className="text-yellow-300 font-mono text-lg sm:text-3xl md:text-4xl px-6 drop-shadow-lg leading-snug">
-              <span className="text-green-400">
-                {captions[currentCaptionIndex]?.slice(0, captionProgress)}
-              </span>
-              <span className="text-white/30">
-                {captions[currentCaptionIndex]?.slice(captionProgress)}
-              </span>
-            </p>
-          </div>
-
-          {/* Navegação */}
+          {/* BOTÕES DE NAVEGAÇÃO */}
           <div className="absolute inset-y-0 left-0 flex items-center">
             <Button
               variant="ghost"
               size="icon"
               className="ml-2 bg-black/50 text-cyan-400 hover:bg-cyan-500/20 border border-cyan-500/30"
               onClick={() =>
-                goTo(currentImageIndex === 0 ? images.length - 1 : currentImageIndex - 1)
+                setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
               }
             >
               <ChevronLeft className="h-6 w-6" />
@@ -156,23 +152,50 @@ export function TechPhotoCarousel() {
               variant="ghost"
               size="icon"
               className="mr-2 bg-black/50 text-cyan-400 hover:bg-cyan-500/20 border border-cyan-500/30"
-              onClick={() => goTo((currentImageIndex + 1) % images.length)}
+              onClick={() => setCurrentIndex((prev) => (prev + 1) % images.length)}
             >
               <ChevronRight className="h-6 w-6" />
             </Button>
           </div>
         </div>
 
-        {/* Rodapé */}
+        {/* LEGENDA */}
+        <div className="mt-6 bg-black border border-cyan-400/30 rounded-xl px-6 py-4 shadow-inner shadow-cyan-500/10 text-center">
+          {!isCaptionDone ? (
+            <p className="text-xl font-mono text-yellow-300 leading-relaxed">
+              <span className="text-green-400">
+                {captions[captionIndex]?.slice(0, captionProgress)}
+              </span>
+              <span className="text-white/30">
+                {captions[captionIndex]?.slice(captionProgress)}
+              </span>
+            </p>
+          ) : (
+            <div className="flex flex-col items-center justify-center space-y-3">
+              <p className="text-cyan-400 font-mono text-base">
+                Fim da mensagem. Deseja ver novamente?
+              </p>
+              <Button
+                onClick={restartCaptions}
+                className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold"
+              >
+                <RotateCcw className="mr-2 h-4 w-4" />
+                Repetir Mensagem
+              </Button>
+            </div>
+          )}
+        </div>
+
+        {/* INDICADORES E CONTROLE */}
         <div className="mt-4 flex justify-between items-center">
           <div className="flex space-x-1">
             {images.map((_, index) => (
               <button
                 key={index}
                 className={`w-2 h-2 rounded-full transition-all ${
-                  index === currentImageIndex ? "bg-cyan-400" : "bg-gray-600"
+                  index === currentIndex ? "bg-cyan-400" : "bg-gray-600"
                 }`}
-                onClick={() => goTo(index)}
+                onClick={() => setCurrentIndex(index)}
               />
             ))}
           </div>
